@@ -21,15 +21,26 @@
 
 ### ✂️ 데이터 전처리 방법 (Img_Preprocess.ipynb 내용 포함)
 * 데이터 전처리 단계에서 'Resize'와 'Data Augmentation' 과정을 거쳤음.
-* 이미지는 (270, 480)으로 Resize 처리했음.
+* 이미지는 (224, 224, 3)으로 Resize 처리했음.
 * Data Augmentation 시에는 '사진 회전/사진 상하좌우 옮기기/사진 상하좌우 반전하기'를 적용했음.
 
 ### 👍 전이학습 모델 선정 (mixed_data_MobileNetV2.ipynb 일부 포함)
 * 수집한 데이터가 비교적 적은 편이라는 점을 고려해서, 구조가 복잡하지 않은 전이학습 모델 위주로 후보군을 선정했음. 
 * 전이학습 모델 후보군으로 VGG-16, ResNet-18, MobileNetV2를 골랐음.
 * 전이학습 모델의 최종 선정 기준은 Validation Accuracy임.
-* VGG16 결과 : 앉은 자세 데이터셋에서 0.9013이라는 최고 Validation Accuracy를 보임.
-* ResNet-18 결과 : 혼합 자세 데이터셋에서 0.5263이라는 최고  Validation Accuracy를 보임.
-* MobileNetV2 결과 : 혼합 자세 데이터셋에서 0.9079라는 최고 Validation Accuracy를 보임.
+* VGG16 결과 (Validation Accuracy) : 앉은 자세 데이터셋에서 0.9013이라는 최고 성능을 보임.
+* ResNet-18 결과 (Validation Accuracy) : 혼합 자세 데이터셋에서 0.5263이라는 최고 성능을 보임.
+* MobileNetV2 결과 (Validation Accuracy) : 혼합 자세 데이터셋에서 0.9079라는 최고 성능을 보임.
 * 따라서 가장 높은 성능을 보인 '혼합 자세 데이터셋 + MobileNetV2' 조합으로 학습 모델을 최종 선정하였음.
-* 해당 단계 코드는 사용한 전이학습 모델명 빼고 모두 동일하므로, mixed_data_MobileNetV2.ipynb만 업로드했음. 
+* 해당 단계에서 사용한 코드들은 전이학습 모델명 빼고 모두 동일하므로, mixed_data_MobileNetV2.ipynb만 업로드했음. 
+
+### 🔧 MobileNetV2 동결 구간 설정 및 미세 조정 
+* MobileNetV2의 1층~36층을 전이 구간으로 지정한 후, 학습에 영향을 받지 않도록 동결했음. 
+* 1층~36층을 제외한 곳들은 learning rate를 2 ⨉ 10**-5로 지정한 후, Adam을 사용해서 미세 조정 단계를 거쳤음.
+* 결과값으로 Validation Accuracy는 1.0이 나왔고, Validation Loss 0.0121이 나왔음.
+
+### ✏️ 프로젝트를 통해 배울 수 있던 점
+* OS 라이브러리를 활용한 일괄 파일 처리 방식
+* OpenCV 라이브러리를 통한 영상 및 이미지 전처리
+* TensorFlow와 Keras 라이브러리를 기반으로 한 Vision 모델 전이학습
+* 구간 동결과 Fine-Tuning 기법 적용 방식
