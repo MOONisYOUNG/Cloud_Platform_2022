@@ -34,7 +34,7 @@
 * 따라서 가장 높은 성능을 보인 '혼합 자세 데이터셋 + MobileNetV2' 조합으로 학습 모델을 최종 선정하였음.
 * 해당 단계에서 사용한 코드들은 전이학습 모델명 빼고 모두 동일하므로, mixed_data_MobileNetV2.ipynb만 업로드했음. 
 
-### 🔧 MobileNetV2 동결 구간 설정 및 미세 조정 
+### 🔧 MobileNetV2 동결 구간 설정 & 미세 조정 
 * MobileNetV2의 1층~36층을 전이 구간으로 지정한 후, 학습에 영향을 받지 않도록 동결했음. 
 * 1층~36층을 제외한 곳들은 learning rate를 2 ⨉ 10**-5로 지정한 후, Adam을 사용해서 미세 조정 단계를 거쳤음.
 * 결과값으로 Validation Accuracy는 1.0이 나왔고, Validation Loss 0.0121이 나왔음.
